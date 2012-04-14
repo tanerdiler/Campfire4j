@@ -23,7 +23,7 @@ public class HelloWorld {
 //        System.out.println("response code " + responseCode);
         
 		Campfire.app(Application.aNew("linkznet"))
-		.login("1848335ce7a2fd3c20c86bfdc994df8e57ac2182")
+		.login("ZZZ")
 		.to(Room.aNew(487059))
 		.write(Message.aNew("bu da deneme"));
 	}
