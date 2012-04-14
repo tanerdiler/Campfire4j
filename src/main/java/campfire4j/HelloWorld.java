@@ -5,12 +5,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class HelloWorld {
 	public static void main(String[] args) throws IOException {
 		URL url = new URL("https://linkznet.campfirenow.com/room/487059/speak.xml");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("Authorization", "Basic " + "XXX");
+        con.setRequestProperty("Authorization", "Basic " + Base64.encodeBase64String("AUTH_KEY:X".getBytes()));
         con.setRequestProperty("Content-Type", "application/xml");
         con.setDoOutput(true);
         con.setDoInput(true);
