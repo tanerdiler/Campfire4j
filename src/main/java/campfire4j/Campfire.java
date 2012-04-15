@@ -44,4 +44,10 @@ public class Campfire
 		this.room = room;
 		return this;
 	}
+	
+	public final void close () {
+		if (connection != null) {
+			connection.close();
+		}
+	}
 }
