@@ -1,0 +1,31 @@
+Campfire4j is a [Apache Log4j](http://logging.apache.org/log4j/1.2/) appender. You can track your application logs on [Campfire Collaboration Tool](http://campfirenow.com/?source=37signals) of [37 Signals](http://37signals.com/).
+
+
+Add the dependency into your application pom.xml
+
+`<dependency>`
+
+`<groupId>campfire4j</groupId>`
+
+`<artifactId>campfire4j</artifactId>`
+
+`<version>0.0.1-SNAPSHOT</version>`
+
+`</dependency>`
+
+
+Add the configurations into your log4j configuration file
+
+`log4j.rootLogger=debug, R`
+
+`log4j.appender.R = campfire4j.CampfireAppender`
+
+`log4j.appender.R.token = [YOUR_CAMPFIRE_AUTH_TOKEN]`
+
+`log4j.appender.R.roomId = [ROOM_ID]`
+
+`log4j.appender.R.application = [YOUR_BASECAMP_APPLICATION_NAME]`
+
+`log4j.appender.R.layout = org.apache.log4j.PatternLayout`
+
+`log4j.appender.R.layout.ConversionPattern=%-5p %d{HH:mm:ss,SSS} %c:%L - %m%n`
