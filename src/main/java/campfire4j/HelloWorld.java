@@ -21,11 +21,7 @@ public class HelloWorld {
 //        os.flush();
 //        int responseCode = con.getResponseCode();
 //        System.out.println("response code " + responseCode);
-        
-		Campfire.app(Application.aNew("linkznet"))
-		.login("ZZZ")
-		.to(Room.aNew(487059))
-		.write(Message.aNew("bu da deneme"));
+
 	}
 	
 }

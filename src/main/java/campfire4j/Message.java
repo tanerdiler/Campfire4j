@@ -1,5 +1,7 @@
 package campfire4j;
 
+import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 
@@ -26,8 +28,8 @@ public class Message {
 		} else if (logEvent != null) {
 			message = logEvent.getRenderedMessage();
 		}
-		
-		return "<message><body>"+message+"</body></message>";
+		String escapedMessage = StringEscapeUtils.escapeXml(message);
+		return "<message><body>"+escapedMessage+"</body></message>";
 	}
 
 	public static Message wrap(LoggingEvent logEvent) {

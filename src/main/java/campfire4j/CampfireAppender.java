@@ -3,8 +3,11 @@ package campfire4j;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
+import static campfire4j.Connectors.connector;
 
 public class CampfireAppender extends AppenderSkeleton {
+
+	private String connection;
 
 	private Application application;
 	private Room room;
@@ -35,6 +38,14 @@ public class CampfireAppender extends AppenderSkeleton {
 		return this.token;
 	}
 
+	public String getConnection() {
+		return connection;
+	}
+	
+	public void setConnection(String connection) {
+		this.connection = connection;
+	}
+
 	@Override
 	public void close() {
 		disconnectCampfireService();
@@ -58,8 +69,8 @@ public class CampfireAppender extends AppenderSkeleton {
 		System.out.println("Room Id : " + room.id);
 		System.out.println("Token : " + token);
 		System.out.println("Message : " + this.layout.format(logEvent));
-		//connectCampfireService().write(
-		//		Message.wrap(logEvent).layout(this.layout));
+		connectCampfireService().write(
+				Message.wrap(logEvent).layout(this.layout));
 	}
 
 	private Campfire connectCampfireService() {
@@ -67,8 +78,7 @@ public class CampfireAppender extends AppenderSkeleton {
 		if (campfire != null) {
 			return campfire;
 		}
-
-		campfire = Campfire.app(application).login(token).to(room);
+		campfire = Campfire.use(connector(connection)).app(application).login(token).to(room);
 
 		return campfire;
 	}

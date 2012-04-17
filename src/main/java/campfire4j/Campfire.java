@@ -12,14 +12,19 @@ public class Campfire
 	private Application application;
 	private Room room;
 
-	private HttpConnection connection;
+	private HttpConnection connector;
 
-	private Campfire(Application application) {
-		this.application = application;
+	private Campfire(HttpConnection connector) {
+		this.connector = connector;
 	}
 	
-	public static final Campfire app (Application application) {
-		return new Campfire(application);
+	public static Campfire use(HttpConnection connector) {
+		return new Campfire(connector);
+	}
+	
+	public final Campfire app (Application application) {
+		this.application = application;
+		return this;
 	}
 
 	public final Campfire login (String authToken)
@@ -31,12 +36,9 @@ public class Campfire
 	public final void write (Message message) {
 		String url = format(CAMPFIRE_URL, application.name, room.id);
 		try {
-			if (connection == null) {
-				connection = HttpConnection.open(url).auth(authToken);
-			}
-			connection.send(message.toString());
+			connector.open(url).auth(authToken).send(message.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -46,8 +48,9 @@ public class Campfire
 	}
 	
 	public final void close () {
-		if (connection != null) {
-			connection.close();
+		if (connector != null) {
+			connector.close();
 		}
 	}
+
 }
